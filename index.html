@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+
+    }
+
+    body {
+        background-color: darkblue;
+    }
+
+    header {
+        display: flex;
+        background-color: grey;
+        height: 50px;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    nav {
+        /* background-color: aqua; */
+    }
+
+    ul {
+        display: flex;
+        /* padding-top: 13px; */
+    }
+
+    li {
+        padding: 0 18px;
+        list-style: none;
+        color: white;
+    }
+
+    a {
+        text-decoration: none;
+        color: white;
+
+    }
+
+    h1 {
+        font-family: 'Courier New', Courier, monospace;
+        padding: 0 6px;
+    }
+
+    .home {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        height: 400px;
+
+    }
+
+    .container {
+        border: 2px solid black;
+        border-radius: 4px;
+        width: 70%;
+        background-color: white;
+
+        height: 340px;
+    }
+
+    .head-v {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 4px;
+    }
+
+    h3 {
+        padding: 0 15px;
+        padding-top: 3px;
+    }
+
+    .button {
+        background-color: #fff;
+        color: #222;
+        font-weight: 500;
+        width: 90%;
+        border: 1px solid #222;
+        padding: 10px;
+        margin: 10px 0;
+        text-align: left;
+        border-radius: 4px;
+        cursor: pointer;
+        position: relative;
+        left: 12px;
+    }
+
+    .button:hover {
+        background-color: darkblue;
+        color: #fff;
+    }
+
+    .next-box {
+        padding: 8px 35px;
+        position: relative;
+        left: 300px;
+        background-color: darkblue;
+        color: #fff;
+        border-radius: 4px;
+    }
+
+    button:hover {
+        background-color: blue;
+    }
+
+    #score {
+        position: relative;
+        top: -16px;
+        left: 12px;
+    }
+</style>
+
+<body>
+    <header>
+        <h1>Quiz App</h1>
+        <nav>
+            <ul>
+                <a href="">
+                    <li>Home</li>
+                </a>
+                <a href="">
+                    <li>About</li>
+                </a>
+                <a href="">
+                    <li>Class for quiz</li>
+                </a>
+                <a href="">
+                    <li>Contant Us
+                </a>
+
+            </ul>
+
+        </nav>
+    </header>
+    <br>
+    <section class="home">
+        <div class="container">
+            <h1 class="head-v">Sample Quiz</h1>
+            <div class="context">
+                <h3 id="question">1. What is the largest city in the world?</h3>
+                <button class="button" type="button" onclick="checkAnswer('Tokyo')">Tokyo</button>
+                <br>
+                <button class="button" type="button" onclick="checkAnswer('Delhi')">Delhi</button>
+                <br>
+                <button class="button" type="button" onclick="checkAnswer('Shanghai')">Shanghai</button>
+                <br>
+                <button class="button" type="button" onclick="checkAnswer('Dhaka')">Dhaka</button>
+                <br>
+                <button class="next-box" type="submit" onclick="nextQuestion()">Next</button>
+            </div>
+            <p id="score">Score: 0</p>
+        </div>
+        <div id="result"></div>
+    </section>
+
+</body>
+<script>
+    
+        let currentQuestionIndex = 0; 
+    let score = 0;
+
+    const questions = [
+        {
+            question: "1. What is the largest city in the world?",
+            options: ["Tokyo", "Delhi", "Shanghai", "Dhaka"],
+            correctAnswer: "Tokyo"
+        },
+        {
+            question: "2. What is the capital of France?",
+            options: ["Berlin", "Madrid", "Paris", "Rome"],
+            correctAnswer: "Paris"
+        },
+        {
+            question: "3. Which planet is known as the Red Planet?",
+            options: ["Earth", "Mars", "Jupiter", "Saturn"],
+            correctAnswer: "Mars"
+        },
+        {
+            question: "4. Which element has the chemical symbol 'O'?",
+            options: ["carbon", "oxygen", "Neon", "hydrogen"],
+            correctAnswer: "carbon"
+        },{
+            question: "5. Who wrote the play Romeo and Juliet?",
+            options: ["William Shakespeare", "Charles Dickens", "Jane Austen", "Mark Twain"],
+            correctAnswer: "William Shakespeare"
+        },
+        {
+            question: "6.What is the largest mammal on Earth?",
+            options: ["Elephant", "Blue Whale", "Giraffe", "Rhinoceros"],
+            correctAnswer: "Blue Whale"
+        },
+        {
+            question: "7.What is the smallest prime number?",
+            options: ["1", "2", "3", "5"],
+            correctAnswer: "2"
+        },
+        {
+            question: "8. What is the boiling point of water?",
+            options: ["90°C", "100°C", "120°C", "50°C"],
+            correctAnswer: "100°C"
+        },
+        {
+            question: "9. Which of these is a primary color?",
+            options: ["Green", "yellow", "orange", "purple"],
+            correctAnswer: "yellow"
+        },
+        {
+            question: "10. In what year did World War II end?",
+            options: ["1941", "1945", "1950", "1939"],
+            correctAnswer: "1945"
+        },
+        {
+            question: "11.What is the hardest natural substance on Earth?",
+            options: ["Gold", "Diamond", "iron", "Platinum"],
+            correctAnswer: "Diamond"
+        },
+        {
+            question: "12. Which of these animals is a mammal?",
+            options: ["Crocodile", "Shark", "Dolphin", "Turtle"],
+            correctAnswer: "Mars"
+        },
+        {
+            question: "13. Who painted the Mona Lisa?",
+            options: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Claude Monet"],
+            correctAnswer: "Leonardo da Vinci"
+        },
+        {
+            question: "14. How many continents are there?",
+            options: ["5", "6", "9", "8"],
+            correctAnswer: "Mars"
+        },
+        {
+            question: "21.What is the largest country in the world by area?",
+            options: ["canada", "United Sates", "China", "Russia"],
+            correctAnswer: "Russia"
+        },
+        {
+            question: "15. What is the speed of light",
+            options: ["Earth", "Mars", "Jupiter", "Saturn"],
+            correctAnswer: "Mars"
+        },
+        {
+            question: "16. Which of these is a type of tree?",
+            options: ["300,000 km/s", "150,000 km/s", "500,000 km/s", "200,000 km/s"],
+            correctAnswer: "300,000km/s"
+        },
+        {
+            question: "17.What is the chemical symbol for gold?",
+            options: ["Au", "Ag", "he", "gu"],
+            correctAnswer: "Mars"
+        },
+        {
+            question: "18.Who is known as the Father of Computers?",
+            options: ["Bill Gates", "Alan Turing", "Charles Babbage", "Steve Jobs"],
+            correctAnswer: "Charles Babbage"
+        },
+        {
+            question: "19. Which is the longest river in the world?",
+            options: ["Amazon", "Nile", "Ganga", "Mississsppi"],
+            correctAnswer: "Nile"
+        },
+        {
+            question: "20.What is the chemical symbol for water?",
+            options: ["H20", "CO2", "02", "NaCL"],
+            correctAnswer: "H20"
+        }
+        // Add more questions here
+    ];
+
+    function checkAnswer(selectedAnswer) {
+        const correctAnswer = questions[currentQuestionIndex].correctAnswer;
+        if (selectedAnswer === correctAnswer) {
+            score++;
+            alert("Correct!");
+        } else {
+            alert("Wrong! The correct answer is " + correctAnswer);
+        }
+        document.getElementById("score").innerText = "Score: " + score;
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            document.getElementById("question").innerText = questions[currentQuestionIndex].question;
+            const buttons = document.querySelectorAll(".button");
+            buttons.forEach((button, index) => {
+                button.innerText = questions[currentQuestionIndex].options[index];
+                button.setAttribute("onclick", `checkAnswer('${questions[currentQuestionIndex].options[index]}')`);
+            });
+        } else {
+            alert("Quiz finished! Your final score is " + score );
+        }
+    }
+    document.getElementById("#result").classList.add(nextquestion);
+</script>
+
+</html>
